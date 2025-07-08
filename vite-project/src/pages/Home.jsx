@@ -277,3 +277,4 @@ function Home() {
 }
 
 export default Home;
+// TO local storage SpeechSynthesisErrorEvent, postejn

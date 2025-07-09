@@ -135,16 +135,306 @@
 // }
 
 // export default TaskList;
+// import React from "react";
+// import { useTaskContext } from "../context/TaskContext";
+// import TaskItem from "./TaskItem";
+
+// function TaskList({ sortKey }) {
+//   const { state } = useTaskContext();
+
+//   let tasks = state.tasks.filter((task) => !task.completed);
+
+//   // Sortierlogik
+//   tasks.sort((a, b) => {
+//     switch (sortKey) {
+//       case "priority":
+//         const prio = { hoch: 3, mittel: 2, niedrig: 1 };
+//         return prio[b.priority] - prio[a.priority];
+//       case "estimatedMinutes":
+//         return a.estimatedMinutes - b.estimatedMinutes;
+//       case "difficulty":
+//         return b.difficulty - a.difficulty;
+//       case "title":
+//         return a.title.localeCompare(b.title);
+//       case "createdAt":
+//       default:
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//     }
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {tasks.length === 0 ? (
+//         <p className="text-gray-500">Keine aktiven Aufgaben.</p>
+//       ) : (
+//         tasks.map((task) => <TaskItem key={task.id} task={task} />)
+//       )}
+//     </div>
+//   );
+// }
+
+// export default TaskList;
+
+// import React from "react";
+// import { useTaskContext } from "../context/TaskContext";
+// import TaskItem from "./TaskItem";
+
+// function TaskList({ sortKey, search = "", filters = {} }) {
+//   const { state } = useTaskContext();
+
+//   let tasks = state.tasks.filter((task) => !task.completed);
+
+//   // 🔍 Filter: Suche (Titel + Beschreibung)
+//   tasks = tasks.filter(
+//     (task) =>
+//       task.title.toLowerCase().includes(search.toLowerCase()) ||
+//       task.description.toLowerCase().includes(search.toLowerCase())
+//   );
+
+//   // 🏷️ Kategorie & Plan-Filter
+//   if (filters.category) {
+//     tasks = tasks.filter((task) => task.category === filters.category);
+//   }
+//   if (filters.plan) {
+//     tasks = tasks.filter((task) => task.plan === filters.plan);
+//   }
+
+//   // 🔁 Sortierung
+//   tasks.sort((a, b) => {
+//     switch (sortKey) {
+//       case "priority":
+//         const prio = { hoch: 3, mittel: 2, niedrig: 1 };
+//         return prio[b.priority] - prio[a.priority];
+//       case "estimatedMinutes":
+//         return a.estimatedMinutes - b.estimatedMinutes;
+//       case "difficulty":
+//         return b.difficulty - a.difficulty;
+//       case "title":
+//         return a.title.localeCompare(b.title);
+//       case "createdAt":
+//       default:
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//     }
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {tasks.length === 0 ? (
+//         <p className="text-gray-500">Keine passenden Aufgaben gefunden.</p>
+//       ) : (
+//         tasks.map((task) => <TaskItem key={task.id} task={task} />)
+//       )}
+//     </div>
+//   );
+// }
+
+// export default TaskList;
+// import React from "react";
+// import { useTaskContext } from "../context/TaskContext";
+// import TaskItem from "./TaskItem";
+
+// function TaskList({ sortKey, search, filters }) {
+//   const { state } = useTaskContext();
+
+//   let tasks = state.tasks.filter((task) => !task.completed);
+
+//   // 🔍 Suche
+//   if (search) {
+//     tasks = tasks.filter(
+//       (task) =>
+//         task.title.toLowerCase().includes(search.toLowerCase()) ||
+//         task.description.toLowerCase().includes(search.toLowerCase())
+//     );
+//   }
+
+//   // 🔘 Filter
+//   if (filters.category) {
+//     tasks = tasks.filter((task) => task.category === filters.category);
+//   }
+//   if (filters.plan) {
+//     tasks = tasks.filter((task) => task.plan === filters.plan);
+//   }
+
+//   // 🔃 Sortierung
+//   tasks.sort((a, b) => {
+//     switch (sortKey) {
+//       case "priority":
+//         const prio = { hoch: 3, mittel: 2, niedrig: 1 };
+//         return prio[b.priority] - prio[a.priority];
+//       case "estimatedMinutes":
+//         return a.estimatedMinutes - b.estimatedMinutes;
+//       case "difficulty":
+//         return b.difficulty - a.difficulty;
+//       case "title":
+//         return a.title.localeCompare(b.title);
+//       case "createdAt":
+//       default:
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//     }
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {tasks.length === 0 ? (
+//         <p className="text-gray-500">Keine passenden Aufgaben gefunden.</p>
+//       ) : (
+//         tasks.map((task) => <TaskItem key={task.id} task={task} />)
+//       )}
+//     </div>
+//   );
+// }
+
+// export default TaskList;
+
+// import React from "react";
+// import { useTaskContext } from "../context/TaskContext";
+// import TaskItem from "./TaskItem";
+
+// function TaskList({ sortKey, search, filters }) {
+//   const { state } = useTaskContext();
+
+//   // 1️⃣ Nur aktive Aufgaben
+//   let tasks = state.tasks.filter((task) => !task.completed);
+
+//   // 2️⃣ 🔍 Suchbegriff im Titel oder Beschreibung
+//   if (search) {
+//     tasks = tasks.filter(
+//       (task) =>
+//         task.title.toLowerCase().includes(search.toLowerCase()) ||
+//         task.description.toLowerCase().includes(search.toLowerCase())
+//     );
+//   }
+
+//   // 3️⃣ 🧊 Filter: Kategorie (persönlich / geschäftlich)
+//   if (filters?.category) {
+//     tasks = tasks.filter((task) => task.category === filters.category);
+//   }
+
+//   // 4️⃣ 🗓️ Filter: Plan (heute / woche / offen)
+//   if (filters?.plan) {
+//     tasks = tasks.filter((task) => task.plan === filters.plan);
+//   }
+
+//   // 5️⃣ 🔃 Sortieren
+//   tasks.sort((a, b) => {
+//     switch (sortKey) {
+//       case "priority":
+//         const prio = { hoch: 3, mittel: 2, niedrig: 1 };
+//         return prio[b.priority] - prio[a.priority];
+//       case "estimatedMinutes":
+//         return a.estimatedMinutes - b.estimatedMinutes;
+//       case "difficulty":
+//         return b.difficulty - a.difficulty;
+//       case "title":
+//         return a.title.localeCompare(b.title);
+//       case "createdAt":
+//       default:
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//     }
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {tasks.length === 0 ? (
+//         <p className="text-gray-500">Keine passenden Aufgaben gefunden.</p>
+//       ) : (
+//         tasks.map((task) => <TaskItem key={task.id} task={task} />)
+//       )}
+//     </div>
+//   );
+// }
+
+// export default TaskList;
+// import React from "react";
+// import { useTaskContext } from "../context/TaskContext";
+// import TaskItem from "./TaskItem";
+
+// function TaskList({ sortKey, search, filters }) {
+//   const { state } = useTaskContext();
+
+//   // Schritt 1: Nur nicht-erledigte Aufgaben
+//   let tasks = state.tasks.filter((task) => !task.completed);
+
+//   // Schritt 2: Suchbegriff (Titel + Beschreibung)
+//   if (search && search.trim() !== "") {
+//     const query = search.toLowerCase();
+//     tasks = tasks.filter(
+//       (task) =>
+//         task.title.toLowerCase().includes(query) ||
+//         task.description.toLowerCase().includes(query)
+//     );
+//   }
+
+//   // Schritt 3: Filter nach Kategorie (wenn gesetzt)
+//   if (filters?.category) {
+//     tasks = tasks.filter((task) => task.category === filters.category);
+//   }
+
+//   // Schritt 4: Filter nach Plan (wenn gesetzt)
+//   if (filters?.plan) {
+//     tasks = tasks.filter((task) => task.plan === filters.plan);
+//   }
+
+//   // Schritt 5: Sortierung
+//   tasks.sort((a, b) => {
+//     const prio = { hoch: 3, mittel: 2, niedrig: 1 };
+
+//     switch (sortKey) {
+//       case "priority":
+//         return prio[b.priority] - prio[a.priority];
+//       case "estimatedMinutes":
+//         return a.estimatedMinutes - b.estimatedMinutes;
+//       case "difficulty":
+//         return b.difficulty - a.difficulty;
+//       case "title":
+//         return a.title.localeCompare(b.title);
+//       case "createdAt":
+//       default:
+//         return new Date(b.createdAt) - new Date(a.createdAt);
+//     }
+//   });
+
+//   return (
+//     <div className="space-y-4">
+//       {tasks.length === 0 ? (
+//         <p className="text-gray-500">Keine passenden Aufgaben gefunden.</p>
+//       ) : (
+//         tasks.map((task) => <TaskItem key={task.id} task={task} />)
+//       )}
+//     </div>
+//   );
+// }
+
+// export default TaskList;
 import React from "react";
 import { useTaskContext } from "../context/TaskContext";
 import TaskItem from "./TaskItem";
 
-function TaskList({ sortKey }) {
+function TaskList({ sortKey, search, filters }) {
   const { state } = useTaskContext();
 
   let tasks = state.tasks.filter((task) => !task.completed);
 
-  // Sortierlogik
+  // 🔎 Suche
+  if (search) {
+    tasks = tasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(search.toLowerCase()) ||
+        task.description.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+
+  // 🏷️ Kategorie
+  if (filters?.category) {
+    tasks = tasks.filter((task) => task.category === filters.category);
+  }
+
+  // 📅 Plan
+  if (filters?.plan) {
+    tasks = tasks.filter((task) => task.plan === filters.plan);
+  }
+
+  // 🔀 Sortierung
   tasks.sort((a, b) => {
     switch (sortKey) {
       case "priority":
@@ -165,7 +455,7 @@ function TaskList({ sortKey }) {
   return (
     <div className="space-y-4">
       {tasks.length === 0 ? (
-        <p className="text-gray-500">Keine aktiven Aufgaben.</p>
+        <p className="text-gray-500">Keine passenden Aufgaben gefunden.</p>
       ) : (
         tasks.map((task) => <TaskItem key={task.id} task={task} />)
       )}
